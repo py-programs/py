@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Terminal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #00ff66;
+            font-family: "Courier New", monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Matrix background */
+        canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(rgba(0,255,80,.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,80,.04) 1px, transparent 1px);
+            background-size: 35px 35px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: min(900px, 92%);
+            margin: auto;
+            padding: 70px 0;
+            text-align: center;
+        }
+
+        .terminal {
+            border: 1px solid #00ff66;
+            background: rgba(0, 15, 5, .82);
+            box-shadow:
+                0 0 15px #00ff66,
+                inset 0 0 30px rgba(0,255,100,.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .terminal-bar {
+            background: rgba(0,255,100,.08);
+            border-bottom: 1px solid #00ff66;
+            padding: 10px 15px;
+            text-align: left;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            margin-right: 5px;
+            background: #00ff66;
+            box-shadow: 0 0 8px #00ff66;
+        }
+
+        .content {
+            padding: 45px 25px;
+        }
+
+        .glitch {
+            font-size: clamp(2.5rem, 9vw, 5.5rem);
+            font-weight: bold;
+            letter-spacing: 5px;
+            position: relative;
+            text-shadow:
+                0 0 5px #00ff66,
+                0 0 20px #00ff66;
+            animation: flicker 2s infinite;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: "SYSTEM ONLINE";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: .6;
+            pointer-events: none;
+        }
+
+        .glitch::before {
+            color: #00ffff;
+            animation: glitch1 .8s infinite;
+        }
+
+        .glitch::after {
+            color: #ff0055;
+            animation: glitch2 .7s infinite;
+        }
+
+        @keyframes glitch1 {
+            0%,100% { clip-path: inset(0 0 85% 0); }
+            50% { clip-path: inset(40% 0 30% 0); transform: translateX(-53%); }
+        }
+
+        @keyframes glitch2 {
+            0%,100% { clip-path: inset(80% 0 0 0); }
+            50% { clip-path: inset(20% 0 50% 0); transform: translateX(-47%); }
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 63%, 64%, 65%, 100% {
+                opacity: 1;
+            }
+            20%, 62% {
+                opacity: .7;
+            }
+        }
+
+        .subtitle {
+            margin: 20px 0;
+            color: #8affb5;
+            font-size: 1rem;
+        }
+
+        .terminal-text {
+            text-align: left;
+            max-width: 650px;
+            margin: 30px auto;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .prompt {
+            color: #00ffff;
+        }
+
+        .success {
+            color: #00ff66;
+        }
+
+        .warning {
+            color: #ffff00;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 17px;
+            background: #00ff66;
+            animation: blink .7s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        button {
+            background: transparent;
+            color: #00ff66;
+            border: 1px solid #00ff66;
+            padding: 13px 25px;
+            font-family: inherit;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: .25s;
+            box-shadow: 0 0 8px rgba(0,255,100,.3);
+        }
+
+        button:hover {
+            background: #00ff66;
+            color: #000;
+            box-shadow:
+                0 0 10px #00ff66,
+                0 0 30px #00ff66;
+            transform: translateY(-3px);
+        }
+
+        .status {
+            margin-top: 35px;
+            padding: 15px;
+            border: 1px dashed #00ff66;
+            color: #8affb5;
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: .6;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 35px 0;
+            }
+
+            .content {
+                padding: 35px 15px;
+            }
+
+            .glitch {
+                letter-spacing: 2px;
+            }
+
+            .terminal-text {
+                font-size: 13px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="container">
+
+    <div class="terminal">
+
+        <div class="terminal-bar">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            &nbsp; cyber_terminal.exe
+        </div>
+
+        <div class="content">
+
+            <h1 class="glitch">SYSTEM ONLINE</h1>
+
+            <p class="subtitle">
+                [ SECURE CONNECTION ESTABLISHED ]
+            </p>
+
+            <div class="terminal-text">
+                <p><span class="prompt">root@system:~$</span> initializing...</p>
+                <p><span class="success">[✓]</span> Matrix interface loaded</p>
+                <p><span class="success">[✓]</span> Encryption module active</p>
+                <p><span class="success">[✓]</span> Security protocol enabled</p>
+                <p><span class="warning">[!]</span> Monitoring system activity...</p>
+                <p><span class="prompt">root@system:~$</span> welcome, operator<span class="cursor"></span></p>
+            </div>
+
+            <div class="buttons">
+                <button onclick="showMessage('ACCESS GRANTED')">
+                    [ ENTER SYSTEM ]
+                </button>
+
+                <button onclick="showMessage('SYSTEM STATUS: ONLINE')">
+                    [ SYSTEM STATUS ]
+                </button>
+            </div>
+
+            <div class="status" id="status">
+                STATUS: <strong>ONLINE</strong>
+            </div>
+
+            <footer>
+                © 2026 Cyber Terminal • Secure Interface
+            </footer>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    /* Matrix rain */
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@";
+    const fontSize = 16;
+    let columns = Math.floor(width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function matrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.06)";
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = "#00ff66";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+
+            ctx.fillText(
+                text,
+                i * fontSize,
+                drops[i] * fontSize
+            );
+
+            if (drops[i] * fontSize > height && Math.random() > .975) {
+                drops[i] = 0;
+            }
+
+            drops[i]++;
+        }
+    }
+
+    setInterval(matrix, 35);
+
+    window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+
+        columns = Math.floor(width / fontSize);
+        drops = Array(columns).fill(1);
+    });
+
+    /* Buttons */
+    function showMessage(message) {
+        const status = document.getElementById("status");
+
+        status.innerHTML = "STATUS: <strong>" + message + "</strong>";
+
+        setTimeout(() => {
+            status.innerHTML = "STATUS: <strong>ONLINE</strong>";
+        }, 2500);
+    }
+</script>
+
+</body>
+</html>
