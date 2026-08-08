@@ -1,0 +1,332 @@
+[
+    {
+        "title": "Hello World",
+        "category": "Basics",
+        "desc": "The classic first program.",
+        "file": "hello.py"
+    },
+    {
+        "title": "Swap Two Variables",
+        "category": "Basics",
+        "desc": "Swaps two variables with and without temp.",
+        "file": "swap_variables.py"
+    },
+    {
+        "title": "ASCII Value of Character",
+        "category": "Basics",
+        "desc": "Prints ASCII value of a character.",
+        "file": "ascii_value.py"
+    },
+    {
+        "title": "Factorial",
+        "category": "Math",
+        "desc": "Calculates factorial of a number.",
+        "file": "factorial.py"
+    },
+    {
+        "title": "Fibonacci Series",
+        "category": "Math",
+        "desc": "Generates Fibonacci numbers up to N terms.",
+        "file": "fibonacci.py"
+    },
+    {
+        "title": "GCD (HCF)",
+        "category": "Math",
+        "desc": "Greatest Common Divisor of two numbers.",
+        "file": "gcd.py"
+    },
+    {
+        "title": "LCM",
+        "category": "Math",
+        "desc": "Least Common Multiple of two numbers.",
+        "file": "lcm.py"
+    },
+    {
+        "title": "Prime Number Check",
+        "category": "Numbers",
+        "desc": "Checks if a number is prime.",
+        "file": "prime_check.py"
+    },
+    {
+        "title": "Palindrome (String)",
+        "category": "Strings",
+        "desc": "Checks if a string is a palindrome.",
+        "file": "palindrome_string.py"
+    },
+    {
+        "title": "Palindrome (Number)",
+        "category": "Numbers",
+        "desc": "Checks if a number is a palindrome.",
+        "file": "palindrome_number.py"
+    },
+    {
+        "title": "Reverse a String",
+        "category": "Strings",
+        "desc": "Reverses a given string.",
+        "file": "reverse_string.py"
+    },
+    {
+        "title": "Reverse an Integer",
+        "category": "Numbers",
+        "desc": "Reverses digits of an integer.",
+        "file": "reverse_integer.py"
+    },
+    {
+        "title": "Armstrong Number",
+        "category": "Numbers",
+        "desc": "Checks if a number is Armstrong.",
+        "file": "armstrong.py"
+    },
+    {
+        "title": "Sum of Digits",
+        "category": "Numbers",
+        "desc": "Calculates sum of digits.",
+        "file": "sum_of_digits.py"
+    },
+    {
+        "title": "Area of Circle",
+        "category": "Geometry",
+        "desc": "Calculates area of a circle.",
+        "file": "area_circle.py"
+    },
+    {
+        "title": "Area of Triangle (Base/Height)",
+        "category": "Geometry",
+        "desc": "Area = 0.5 * base * height.",
+        "file": "area_triangle_base.py"
+    },
+    {
+        "title": "Area of Triangle (Heron's)",
+        "category": "Geometry",
+        "desc": "Area using three sides.",
+        "file": "area_triangle_heron.py"
+    },
+    {
+        "title": "Area of Rectangle",
+        "category": "Geometry",
+        "desc": "Area = length * breadth.",
+        "file": "area_rectangle.py"
+    },
+    {
+        "title": "Area of Square",
+        "category": "Geometry",
+        "desc": "Area = side * side.",
+        "file": "area_square.py"
+    },
+    {
+        "title": "Area of Parallelogram",
+        "category": "Geometry",
+        "desc": "Area = base * height.",
+        "file": "area_parallelogram.py"
+    },
+    {
+        "title": "Area of Trapezium",
+        "category": "Geometry",
+        "desc": "Area = 0.5 * (a+b) * h.",
+        "file": "area_trapezium.py"
+    },
+    {
+        "title": "Area of Rhombus",
+        "category": "Geometry",
+        "desc": "Area = 0.5 * d1 * d2.",
+        "file": "area_rhombus.py"
+    },
+    {
+        "title": "Perimeter of Circle",
+        "category": "Geometry",
+        "desc": "Circumference = 2 * π * r.",
+        "file": "perimeter_circle.py"
+    },
+    {
+        "title": "Perimeter of Triangle",
+        "category": "Geometry",
+        "desc": "Sum of three sides.",
+        "file": "perimeter_triangle.py"
+    },
+    {
+        "title": "Perimeter of Rectangle",
+        "category": "Geometry",
+        "desc": "Perimeter = 2 * (l + b).",
+        "file": "perimeter_rectangle.py"
+    },
+    {
+        "title": "Perimeter of Square",
+        "category": "Geometry",
+        "desc": "Perimeter = 4 * side.",
+        "file": "perimeter_square.py"
+    },
+    {
+        "title": "Volume of Cube",
+        "category": "Geometry",
+        "desc": "Volume = side^3.",
+        "file": "volume_cube.py"
+    },
+    {
+        "title": "Volume of Cuboid",
+        "category": "Geometry",
+        "desc": "Volume = l * b * h.",
+        "file": "volume_cuboid.py"
+    },
+    {
+        "title": "Volume of Cylinder",
+        "category": "Geometry",
+        "desc": "Volume = π * r^2 * h.",
+        "file": "volume_cylinder.py"
+    },
+    {
+        "title": "Volume of Cone",
+        "category": "Geometry",
+        "desc": "Volume = (1/3) * π * r^2 * h.",
+        "file": "volume_cone.py"
+    },
+    {
+        "title": "Volume of Sphere",
+        "category": "Geometry",
+        "desc": "Volume = (4/3) * π * r^3.",
+        "file": "volume_sphere.py"
+    },
+    {
+        "title": "Volume of Hemisphere",
+        "category": "Geometry",
+        "desc": "Volume = (2/3) * π * r^3.",
+        "file": "volume_hemisphere.py"
+    },
+    {
+        "title": "Simple Interest",
+        "category": "Math",
+        "desc": "SI = (P * R * T) / 100.",
+        "file": "simple_interest.py"
+    },
+    {
+        "title": "Compound Interest",
+        "category": "Math",
+        "desc": "CI = P * (1 + R/100)^T - P.",
+        "file": "compound_interest.py"
+    },
+    {
+        "title": "Multiplication Table",
+        "category": "Numbers",
+        "desc": "Prints multiplication table.",
+        "file": "multiplication_table.py"
+    },
+    {
+        "title": "Check Even or Odd",
+        "category": "Numbers",
+        "desc": "Determines even or odd.",
+        "file": "even_odd.py"
+    },
+    {
+        "title": "Leap Year Check",
+        "category": "Numbers",
+        "desc": "Checks leap year.",
+        "file": "leap_year.py"
+    },
+    {
+        "title": "Largest Among Three",
+        "category": "Numbers",
+        "desc": "Finds maximum of three numbers.",
+        "file": "largest_three.py"
+    },
+    {
+        "title": "Sum of Natural Numbers",
+        "category": "Math",
+        "desc": "Sum of first n natural numbers.",
+        "file": "sum_natural.py"
+    },
+    {
+        "title": "Perfect Number Check",
+        "category": "Numbers",
+        "desc": "Checks if number is perfect.",
+        "file": "perfect_number.py"
+    },
+    {
+        "title": "Strong Number Check",
+        "category": "Numbers",
+        "desc": "Sum of factorials of digits = number.",
+        "file": "strong_number.py"
+    },
+    {
+        "title": "Decimal to Binary",
+        "category": "Conversions",
+        "desc": "Converts decimal to binary.",
+        "file": "decimal_to_binary.py"
+    },
+    {
+        "title": "Binary to Decimal",
+        "category": "Conversions",
+        "desc": "Converts binary to decimal.",
+        "file": "binary_to_decimal.py"
+    },
+    {
+        "title": "Celsius to Fahrenheit",
+        "category": "Conversions",
+        "desc": "Temperature conversion.",
+        "file": "celsius_to_fahrenheit.py"
+    },
+    {
+        "title": "Fahrenheit to Celsius",
+        "category": "Conversions",
+        "desc": "Temperature conversion.",
+        "file": "fahrenheit_to_celsius.py"
+    },
+    {
+        "title": "Vowel Counter",
+        "category": "Strings",
+        "desc": "Counts vowels in a string.",
+        "file": "vowel_counter.py"
+    },
+    {
+        "title": "Print Only Vowels",
+        "category": "Strings",
+        "desc": "Prints only vowels from string.",
+        "file": "print_vowels.py"
+    },
+    {
+        "title": "Vowels to Uppercase",
+        "category": "Strings",
+        "desc": "Converts all vowels to uppercase.",
+        "file": "vowels_upper.py"
+    },
+    {
+        "title": "Print Lowercase Vowels",
+        "category": "Strings",
+        "desc": "Prints vowels in lowercase only.",
+        "file": "lowercase_vowels.py"
+    },
+    {
+        "title": "Remove Vowels",
+        "category": "Strings",
+        "desc": "Removes all vowels from string.",
+        "file": "remove_vowels.py"
+    },
+    {
+        "title": "Replace Vowels with *",
+        "category": "Strings",
+        "desc": "Replaces each vowel with *.",
+        "file": "replace_vowels.py"
+    },
+    {
+        "title": "Count Each Vowel",
+        "category": "Strings",
+        "desc": "Counts a,e,i,o,u individually.",
+        "file": "count_each_vowel.py"
+    },
+    {
+        "title": "Toggle Case of Vowels",
+        "category": "Strings",
+        "desc": "Swaps case of vowels (a↔A).",
+        "file": "toggle_vowels.py"
+    },
+    {
+        "title": "Count Vowels & Consonants",
+        "category": "Strings",
+        "desc": "Counts vowels and consonants.",
+        "file": "count_vowels_consonants.py"
+    },
+    {
+        "title": "String Length without len()",
+        "category": "Strings",
+        "desc": "Calculates length manually.",
+        "file": "string_length.py"
+    }
+]
