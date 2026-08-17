@@ -1,0 +1,297 @@
+import sys
+
+
+class VOIDInterpreter:
+    def __init__(self):
+        self.variables = {}
+
+    # -------------------------
+    # Get a value
+    # -------------------------
+    def get_value(self, value):
+        value = value.strip()
+
+        # String
+        if (
+            len(value) >= 2
+            and value[0] == '"'
+            and value[-1] == '"'
+        ):
+            return value[1:-1]
+
+        # Integer / decimal
+        try:
+            if "." in value:
+                return float(value)
+            return int(value)
+        except ValueError:
+            pass
+
+        # Variable
+        if value in self.variables:
+            return self.variables[value]
+
+        raise Exception(
+            f"Unknown value '{value}'"
+        )
+
+    # -------------------------
+    # Arithmetic
+    # -------------------------
+    def calculate(self, command, args):
+
+        if len(args) != 2:
+            raise Exception(
+                f"{command} requires 2 values"
+            )
+
+        x = self.get_value(args[0])
+        y = self.get_value(args[1])
+
+        if not isinstance(x, (int, float)):
+            raise Exception(
+                "First value must be a number"
+            )
+
+        if not isinstance(y, (int, float)):
+            raise Exception(
+                "Second value must be a number"
+            )
+
+        if command == "add":
+            return x + y
+
+        if command == "sub":
+            return x - y
+
+        if command == "mul":
+            return x * y
+
+        if command == "div":
+            if y == 0:
+                raise Exception(
+                    "Cannot divide by zero"
+                )
+            return x / y
+
+        if command == "mod":
+            if y == 0:
+                raise Exception(
+                    "Cannot divide by zero"
+                )
+            return x % y
+
+        raise Exception(
+            f"Unknown command '{command}'"
+        )
+
+    # -------------------------
+    # Print
+    # -------------------------
+    def do_print(self, value):
+        result = self.get_value(value)
+        print(result)
+
+    # -------------------------
+    # Execute one line
+    # -------------------------
+    def execute(self, line, line_number=0):
+
+        line = line.strip()
+
+        # Empty line
+        if not line:
+            return
+
+        # Comment
+        if line.startswith("#"):
+            return
+
+        # PRINT
+        if line.lower().startswith("print "):
+            value = line[6:].strip()
+            self.do_print(value)
+            return
+
+        # HELP
+        if line.lower() == "help":
+            print("""
+VOID Commands
+-------------
+
+X = 10
+X = "Hello"
+
+A = add X, Y
+A = sub X, Y
+A = mul X, Y
+A = div X, Y
+A = mod X, Y
+
+Print X
+
+exit
+clear
+vars
+""")
+            return
+
+        # VARIABLES
+        if line.lower() == "vars":
+            if not self.variables:
+                print("No variables.")
+                return
+
+            for name, value in self.variables.items():
+                print(f"{name} = {value}")
+
+            return
+
+        # CLEAR
+        if line.lower() == "clear":
+            self.variables.clear()
+            print("Variables cleared.")
+            return
+
+        # Assignment
+        if "=" not in line:
+            raise Exception(
+                "Expected '='"
+            )
+
+        name, expression = line.split(
+            "=", 1
+        )
+
+        name = name.strip()
+        expression = expression.strip()
+
+        # Variable name validation
+        if not name.isidentifier():
+            raise Exception(
+                f"Invalid variable name '{name}'"
+            )
+
+        # Direct value
+        parts = expression.split(None, 1)
+
+        if len(parts) == 1:
+            self.variables[name] = (
+                self.get_value(parts[0])
+            )
+            return
+
+        # Command
+        command = parts[0].lower()
+
+        args = [
+            x.strip()
+            for x in parts[1].split(",")
+        ]
+
+        self.variables[name] = (
+            self.calculate(command, args)
+        )
+
+    # -------------------------
+    # Run a VOID program
+    # -------------------------
+    def run(self, code):
+
+        for line_number, line in enumerate(
+            code.splitlines(), 1
+        ):
+            try:
+                self.execute(
+                    line,
+                    line_number
+                )
+
+            except Exception as error:
+                print(
+                    f"VOID Error "
+                    f"(line {line_number}): "
+                    f"{error}"
+                )
+
+
+# =================================
+# REPL
+# =================================
+
+def repl():
+
+    void = VOIDInterpreter()
+
+    print("VOID v0.1")
+    print("Visual Object & Interface Development")
+    print('Type "help" for help.')
+    print('Type "exit" to quit.')
+    print()
+
+    while True:
+
+        try:
+            line = input("VOID> ")
+
+            if line.lower() == "exit":
+                print("Goodbye.")
+                break
+
+            void.execute(line)
+
+        except KeyboardInterrupt:
+            print("\nUse 'exit' to quit.")
+
+        except Exception as error:
+            print(
+                f"VOID Error: {error}"
+            )
+
+
+# =================================
+# FILE MODE
+# =================================
+
+def run_file(filename):
+
+    void = VOIDInterpreter()
+
+    try:
+
+        with open(
+            filename,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            code = file.read()
+
+        void.run(code)
+
+    except FileNotFoundError:
+        print(
+            f"VOID Error: "
+            f"File '{filename}' not found."
+        )
+
+
+# =================================
+# START VOID
+# =================================
+
+if len(sys.argv) == 1:
+
+    repl()
+
+else:
+
+    filename = sys.argv[1]
+
+    if not filename.endswith(".void"):
+        print(
+            "VOID Error: "
+            "File must end with .void"
+        )
+    else:
+      run_file(filename)
